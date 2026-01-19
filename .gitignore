@@ -30,3 +30,5 @@ phpstan.neon
 testbench.yaml
 /docs
 /coverage
+/scaleo_open_api.yaml
+/scaleo-io-api-client-specs.md
