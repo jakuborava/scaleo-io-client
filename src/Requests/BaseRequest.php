@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JakubOrava\ScaleoIoClient\Requests;
 
-abstract class BaseRequest
+class BaseRequest
 {
     protected ?int $page = null;
 
