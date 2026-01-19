@@ -6,7 +6,9 @@ namespace JakubOrava\ScaleoIoClient\Endpoints;
 
 use JakubOrava\ScaleoIoClient\BaseScaleoClient;
 use JakubOrava\ScaleoIoClient\Endpoints\Affiliate\Dashboard;
+use JakubOrava\ScaleoIoClient\Endpoints\Affiliate\OfferRequests;
 use JakubOrava\ScaleoIoClient\Endpoints\Affiliate\Offers;
+use JakubOrava\ScaleoIoClient\Endpoints\Affiliate\ReportsEndpoints;
 
 class AffiliateEndpoints
 {
@@ -24,9 +26,17 @@ class AffiliateEndpoints
         return new Offers($this->client);
     }
 
+    public function offerRequests(): OfferRequests
+    {
+        return new OfferRequests($this->client);
+    }
+
+    public function reports(): ReportsEndpoints
+    {
+        return new ReportsEndpoints($this->client);
+    }
+
     // TODO: Add endpoint methods as they are implemented
-    // public function offerRequests(): OfferRequests
-    // public function reports(): ReportsEndpoints
     // public function billing(): BillingEndpoints
     // public function profile(): Profile
     // public function postbacks(): Postbacks
