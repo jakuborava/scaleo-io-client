@@ -34,8 +34,7 @@
     },
     "autoload": {
         "psr-4": {
-            "JakubOrava\\ScaleoIoClient\\": "src/",
-            "JakubOrava\\ScaleoIoClient\\Database\\Factories\\": "database/factories/"
+            "JakubOrava\\ScaleoIoClient\\": "src/"
         }
     },
     "autoload-dev": {
