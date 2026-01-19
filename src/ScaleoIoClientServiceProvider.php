@@ -4,7 +4,6 @@ namespace JakubOrava\ScaleoIoClient;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use JakubOrava\ScaleoIoClient\Commands\ScaleoIoClientCommand;
 
 class ScaleoIoClientServiceProvider extends PackageServiceProvider
 {
