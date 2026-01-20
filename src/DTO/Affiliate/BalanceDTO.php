@@ -34,6 +34,8 @@ readonly class BalanceDTO
             $balanceDueByCurrencies = [];
         }
 
+        /** @var array<int, array<string, mixed>> $balanceDueByCurrencies */
+
         return new self(
             currency: self::getString($data, 'currency'),
             approvedBalance: self::getString($data, 'approved_balance'),

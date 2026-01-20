@@ -64,6 +64,10 @@ readonly class OfferDTO
         );
 
         $targetingData = $data['targeting'] ?? null;
+        if ($targetingData !== null && ! is_array($targetingData)) {
+            $targetingData = null;
+        }
+        /** @var array<string, mixed>|null $targetingData */
         $targeting = is_array($targetingData) ? TargetingDTO::fromArray($targetingData) : null;
 
         $creativesData = $data['creatives'] ?? [];

@@ -39,11 +39,13 @@ readonly class PostbackDTO
         if ($offerSelected !== null && ! is_array($offerSelected)) {
             $offerSelected = null;
         }
+        /** @var array<string, mixed>|null $offerSelected */
 
         $goalSelected = $data['goal_selected'] ?? null;
         if ($goalSelected !== null && ! is_array($goalSelected)) {
             $goalSelected = null;
         }
+        /** @var array<string, mixed>|null $goalSelected */
 
         return new self(
             id: self::getInt($data, 'id'),

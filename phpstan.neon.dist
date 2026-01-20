@@ -1,7 +1,8 @@
 parameters:
-    level: 3
+    level: max
     paths:
         - src
     tmpDir: build/phpstan
     checkOctaneCompatibility: true
     checkModelProperties: true
+    treatPhpDocTypesAsCertain: false

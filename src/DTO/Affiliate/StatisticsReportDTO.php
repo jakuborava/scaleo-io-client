@@ -55,6 +55,7 @@ readonly class StatisticsReportDTO
         if (! is_array($totals)) {
             $totals = [];
         }
+        /** @var array<string, mixed> $totals */
 
         return new self(
             timezone: $timezone,

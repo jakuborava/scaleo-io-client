@@ -44,11 +44,23 @@ class Statistics
         // Statistics returns a single report object, wrap it in an array for pagination
         $reportData = StatisticsReportDTO::fromArray($response);
 
+        $currentPage = null;
+        if (isset($queryParams['page'])) {
+            $page = $queryParams['page'];
+            $currentPage = is_int($page) ? $page : (is_numeric($page) ? (int) $page : null);
+        }
+
+        $perPage = null;
+        if (isset($queryParams['perPage'])) {
+            $perPageValue = $queryParams['perPage'];
+            $perPage = is_int($perPageValue) ? $perPageValue : (is_numeric($perPageValue) ? (int) $perPageValue : null);
+        }
+
         return new PaginatedResponse(
             items: new Collection([$reportData]),
             totalItems: 1,
-            currentPage: $queryParams['page'] ?? null,
-            perPage: $queryParams['perPage'] ?? null,
+            currentPage: $currentPage,
+            perPage: $perPage,
             totalPages: 1,
         );
     }

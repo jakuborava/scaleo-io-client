@@ -242,9 +242,12 @@ class BaseScaleoClient
             throw new UnexpectedResponseException('Response info is not an array');
         }
 
+        /** @var array<string, array<int, string>> $headers */
+        $headers = $response->headers();
+
         return [
             'data' => $unwrappedData,
-            'headers' => $response->headers(),
+            'headers' => $headers,
         ];
     }
 

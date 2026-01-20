@@ -35,7 +35,7 @@ class Players
         $queryParams = $request->toArray();
 
         $result = $this->client->get('api/v2/affiliate/players', $queryParams);
-        /** @var array<string, mixed> $response */
+        /** @var array<int, mixed> $response */
         $response = $result['data'];
 
         // Players data is directly in response as an array
@@ -57,7 +57,7 @@ class Players
             response: ['players' => $items],
             itemsKey: 'players',
             paginationHeaders: $result['headers'],
-            mapper: fn (PlayerDTO $player): PlayerDTO => $player
+            mapper: fn (array $player): PlayerDTO => PlayerDTO::fromArray($player)
         );
     }
 }

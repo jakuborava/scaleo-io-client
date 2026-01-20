@@ -108,7 +108,7 @@ class PaymentMethods
     /**
      * Get supported currencies for a base currency
      *
-     * @return PaginatedResponse<mixed>
+     * @return PaginatedResponse<array<string, mixed>>
      *
      * @throws AuthenticationException
      * @throws ValidationException

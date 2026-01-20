@@ -39,6 +39,8 @@ readonly class PeriodDataDTO
         if (! is_array($series)) {
             throw new \InvalidArgumentException('Expected array for series');
         }
+        /** @var array<int, string> $ranges */
+        /** @var array<int, int> $series */
 
         return new self(
             from: self::getInt($data, 'from'),

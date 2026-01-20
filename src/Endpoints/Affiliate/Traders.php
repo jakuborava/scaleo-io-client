@@ -35,7 +35,7 @@ class Traders
         $queryParams = $request->toArray();
 
         $result = $this->client->get('api/v2/affiliate/traders', $queryParams);
-        /** @var array<string, mixed> $response */
+        /** @var array<int, mixed> $response */
         $response = $result['data'];
 
         // Traders data is directly in response as an array
@@ -57,7 +57,7 @@ class Traders
             response: ['traders' => $items],
             itemsKey: 'traders',
             paginationHeaders: $result['headers'],
-            mapper: fn (TraderDTO $trader): TraderDTO => $trader
+            mapper: fn (array $trader): TraderDTO => TraderDTO::fromArray($trader)
         );
     }
 }

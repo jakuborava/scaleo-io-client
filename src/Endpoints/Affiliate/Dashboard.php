@@ -35,7 +35,7 @@ class Dashboard
         $queryParams = $request->toArray();
 
         $result = $this->client->post('api/v2/affiliate/dashboard/statistics/network-summary', [], $queryParams);
-        /** @var array<string, mixed> $response */
+        /** @var array<int, mixed> $response */
         $response = $result['data'];
 
         if (! is_array($response)) {

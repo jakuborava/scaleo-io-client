@@ -25,11 +25,13 @@ readonly class NetworkSummaryItemDTO
         if (! is_array($current)) {
             throw new \InvalidArgumentException('Expected array for current');
         }
+        /** @var array<string, mixed> $current */
 
         $previous = $data['previous'] ?? [];
         if (! is_array($previous)) {
             throw new \InvalidArgumentException('Expected array for previous');
         }
+        /** @var array<string, mixed> $previous */
 
         return new self(
             key: self::getString($data, 'key'),

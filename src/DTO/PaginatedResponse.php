@@ -37,7 +37,7 @@ readonly class PaginatedResponse
      * @template TItem
      *
      * @param  array<string, mixed>  $response
-     * @param  array<string, mixed>  $paginationHeaders
+     * @param  array<string, array<int, string>>  $paginationHeaders
      * @param  callable(array<string, mixed>): TItem  $mapper
      * @return self<TItem>
      */

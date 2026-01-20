@@ -36,11 +36,13 @@ readonly class BillingPreferencesDTO
         if (! is_array($invoiceFrequency)) {
             $invoiceFrequency = [];
         }
+        /** @var array<string, mixed> $invoiceFrequency */
 
         $paymentTerms = $data['payment_terms'] ?? [];
         if (! is_array($paymentTerms)) {
             $paymentTerms = [];
         }
+        /** @var array<string, mixed> $paymentTerms */
 
         return new self(
             invoiceFrequency: $invoiceFrequency,
