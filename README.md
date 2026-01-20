@@ -15,11 +15,58 @@ You can install the package via composer:
 composer require jakuborava/scaleo-io-client
 ```
 
+## Configuration
+
+You can configure the API client in two ways:
+
+### Option 1: Environment Variables (Recommended for Laravel applications)
+
 Set your API credentials in `.env`:
 
 ```env
 SCALEO_API_KEY=your_api_key_here
 SCALEO_BASE_URL=https://your-domain.scaletrk.com
+```
+
+Then instantiate the client without parameters:
+
+```php
+use JakubOrava\ScaleoIoClient\ScaleoIoClient;
+
+$client = new ScaleoIoClient();
+```
+
+**Best for:** Laravel applications where credentials are managed through environment configuration.
+
+### Option 2: Direct Configuration (Recommended for standalone usage)
+
+Pass credentials directly to the constructor:
+
+```php
+use JakubOrava\ScaleoIoClient\ScaleoIoClient;
+
+$client = new ScaleoIoClient(
+    apiKey: 'your_api_key_here',
+    baseUrl: 'https://your-domain.scaletrk.com'
+);
+```
+
+**Best for:**
+- Standalone PHP applications
+- Multiple API accounts in the same application
+- Testing with different credentials
+- Dynamic credential management
+
+### Mixed Configuration
+
+You can also mix both approaches - constructor parameters take priority over environment variables:
+
+```php
+// Use environment variables as defaults, but override API key
+$client = new ScaleoIoClient(
+    apiKey: 'different-api-key',
+    baseUrl: null // Will use SCALEO_BASE_URL from environment
+);
 ```
 
 ## Usage
@@ -29,7 +76,14 @@ SCALEO_BASE_URL=https://your-domain.scaletrk.com
 ```php
 use JakubOrava\ScaleoIoClient\ScaleoIoClient;
 
+// Using environment variables
 $client = new ScaleoIoClient();
+
+// OR using direct configuration
+$client = new ScaleoIoClient(
+    apiKey: 'your_api_key_here',
+    baseUrl: 'https://your-domain.scaletrk.com'
+);
 ```
 
 ### Dashboard

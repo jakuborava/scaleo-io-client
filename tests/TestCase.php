@@ -34,4 +34,15 @@ class TestCase extends Orchestra
          }
          */
     }
+
+    /**
+     * Create a test client with test credentials
+     */
+    protected function createTestClient(): \JakubOrava\ScaleoIoClient\ScaleoIoClient
+    {
+        return new \JakubOrava\ScaleoIoClient\ScaleoIoClient(
+            apiKey: 'test-api-key',
+            baseUrl: 'https://test.scaletrk.com'
+        );
+    }
 }

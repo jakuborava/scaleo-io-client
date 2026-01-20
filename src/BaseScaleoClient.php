@@ -18,13 +18,13 @@ class BaseScaleoClient
 
     private string $baseUrl;
 
-    public function __construct()
+    public function __construct(?string $apiKey = null, ?string $baseUrl = null)
     {
-        $apiKey = config('scaleo-io-client.api_key', '');
+        $apiKey = $apiKey ?? config('scaleo-io-client.api_key', '');
         assert(is_string($apiKey));
         $this->apiKey = $apiKey;
 
-        $baseUrl = config('scaleo-io-client.base_url', '');
+        $baseUrl = $baseUrl ?? config('scaleo-io-client.base_url', '');
         assert(is_string($baseUrl));
         $this->baseUrl = rtrim($baseUrl, '/');
     }

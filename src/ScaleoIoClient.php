@@ -10,9 +10,9 @@ class ScaleoIoClient
 {
     private BaseScaleoClient $client;
 
-    public function __construct()
+    public function __construct(?string $apiKey = null, ?string $baseUrl = null)
     {
-        $this->client = new BaseScaleoClient;
+        $this->client = new BaseScaleoClient($apiKey, $baseUrl);
     }
 
     public function affiliate(): AffiliateEndpoints
