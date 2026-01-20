@@ -111,7 +111,7 @@ describe('Direct Configuration', function () {
             ], 200),
         ]);
 
-        $client = new ScaleoIoClient();
+        $client = new ScaleoIoClient;
 
         $client->affiliate()->profile()->get();
 

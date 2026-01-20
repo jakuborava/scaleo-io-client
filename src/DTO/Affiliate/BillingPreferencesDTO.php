@@ -37,7 +37,6 @@ readonly class BillingPreferencesDTO
             $invoiceFrequency = [];
         }
         /** @var array<string, mixed> $invoiceFrequency */
-
         $paymentTerms = $data['payment_terms'] ?? [];
         if (! is_array($paymentTerms)) {
             $paymentTerms = [];
