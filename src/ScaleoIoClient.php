@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace JakubOrava\ScaleoIoClient;
 
 use JakubOrava\ScaleoIoClient\Endpoints\AffiliateEndpoints;
+use JakubOrava\ScaleoIoClient\Endpoints\CommonEndpoints;
 
 class ScaleoIoClient
 {
@@ -18,5 +19,10 @@ class ScaleoIoClient
     public function affiliate(): AffiliateEndpoints
     {
         return new AffiliateEndpoints($this->client);
+    }
+
+    public function common(): CommonEndpoints
+    {
+        return new CommonEndpoints($this->client);
     }
 }

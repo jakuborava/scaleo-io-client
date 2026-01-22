@@ -26,6 +26,7 @@ readonly class OfferLinkDTO
         public ?int $created,
         public ?int $updated,
         public ?string $typeSelected,
+        public array $rules,
     ) {}
 
     /**
@@ -33,6 +34,11 @@ readonly class OfferLinkDTO
      */
     public static function fromArray(array $data): self
     {
+        $rules = $data['rules'] ?? [];
+        if (! is_array($rules)) {
+            $rules = [];
+        }
+
         return new self(
             id: self::getInt($data, 'id'),
             title: self::getString($data, 'title'),
@@ -49,6 +55,7 @@ readonly class OfferLinkDTO
             created: self::getIntOrNull($data, 'created'),
             updated: self::getIntOrNull($data, 'updated'),
             typeSelected: self::getStringOrNull($data, 'type_selected'),
+            rules: $rules,
         );
     }
 }

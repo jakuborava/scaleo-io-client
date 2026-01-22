@@ -16,6 +16,7 @@ readonly class OfferDTO
      * @param  Collection<int, OfferLinkDTO>  $links
      * @param  Collection<int, CreativeDTO>  $creatives
      * @param  Collection<int, CategoryDTO>  $categories
+     * @param  Collection<int, VisibleTypeDTO>  $visibleTypeSelected
      */
     public function __construct(
         public int $id,
@@ -49,6 +50,8 @@ readonly class OfferDTO
         public Collection $categories,
         public ?string $postbacks = null,
         public ?int $deepLinking = null,
+        public Collection $visibleTypeSelected,
+        public ?LiveStatsDTO $liveStats = null,
     ) {}
 
     /**
@@ -112,6 +115,27 @@ readonly class OfferDTO
         /** @var Collection<int, CategoryDTO> $categories */
         $categories = new Collection($categoriesItems);
 
+        $visibleTypeSelectedData = $data['visible_type_selected'] ?? [];
+        if (! is_array($visibleTypeSelectedData)) {
+            $visibleTypeSelectedData = [];
+        }
+        $visibleTypeSelectedItems = [];
+        foreach ($visibleTypeSelectedData as $visibleType) {
+            if (is_array($visibleType)) {
+                /** @var array<string, mixed> $visibleType */
+                $visibleTypeSelectedItems[] = VisibleTypeDTO::fromArray($visibleType);
+            }
+        }
+        /** @var Collection<int, VisibleTypeDTO> $visibleTypeSelected */
+        $visibleTypeSelected = new Collection($visibleTypeSelectedItems);
+
+        $liveStatsData = $data['live_stats'] ?? null;
+        if ($liveStatsData !== null && ! is_array($liveStatsData)) {
+            $liveStatsData = null;
+        }
+        /** @var array<string, mixed>|null $liveStatsData */
+        $liveStats = is_array($liveStatsData) ? LiveStatsDTO::fromArray($liveStatsData) : null;
+
         return new self(
             id: self::getInt($data, 'id'),
             title: self::getString($data, 'title'),
@@ -137,13 +161,15 @@ readonly class OfferDTO
             trackingDomain: self::getStringOrNull($data, 'tracking_domain'),
             goals: $goals,
             targeting: $targeting,
-            creativesCount: self::getInt($data, 'creatives_count'),
+            creativesCount: self::getIntOrNull($data, 'creatives_count') ?? 0,
             creatives: $creatives,
-            linksCount: self::getInt($data, 'links_count'),
+            linksCount: self::getIntOrNull($data, 'links_count') ?? 0,
             links: $links,
             categories: $categories,
             postbacks: self::getStringOrNull($data, 'postbacks'),
             deepLinking: self::getIntOrNull($data, 'deep_linking'),
+            visibleTypeSelected: $visibleTypeSelected,
+            liveStats: $liveStats,
         );
     }
 }
