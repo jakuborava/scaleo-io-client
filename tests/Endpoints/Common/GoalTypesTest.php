@@ -20,25 +20,21 @@ describe('Goal Types List', function () {
     it('can list goal types', function () {
         Http::fake([
             '*/api/v2/common/lists/goals-types*' => Http::response([
-                'status' => 1,
-                'info' => [
-                    'count' => 3,
-                ],
-                'results' => [
+                'goals-types-list' => [
                     [
-                        'id' => 'sale',
+                        'id' => 1,
                         'title' => 'Sale',
                     ],
                     [
-                        'id' => 'lead',
+                        'id' => 2,
                         'title' => 'Lead',
                     ],
                     [
-                        'id' => 'click',
+                        'id' => 3,
                         'title' => 'Click',
                     ],
                 ],
-            ], 200),
+            ]),
         ]);
 
         $result = $this->goalTypes->list();
@@ -47,20 +43,14 @@ describe('Goal Types List', function () {
             ->and($result->count)->toBe(3)
             ->and($result->results)->toHaveCount(3)
             ->and($result->results->first())->toBeInstanceOf(GoalTypeDTO::class)
-            ->and($result->results->first()->id)->toBe('sale')
+            ->and($result->results->first()->id)->toBe(1)
             ->and($result->results->first()->title)->toBe('Sale')
-            ->and($result->results->last()->id)->toBe('click')
+            ->and($result->results->last()->id)->toBe(3)
             ->and($result->results->last()->title)->toBe('Click');
     });
 
     it('can use BaseRequest with pagination', function () {
-        Http::fake([
-            '*/api/v2/common/lists/goals-types*' => Http::response([
-                'status' => 1,
-                'info' => ['count' => 0],
-                'results' => [],
-            ], 200),
-        ]);
+        Http::fake(['*/api/v2/common/lists/goals-types*' => Http::response(['goals-types-list' => []])]);
 
         $request = (new BaseRequest)
             ->page(2)
@@ -70,35 +60,23 @@ describe('Goal Types List', function () {
 
         Http::assertSent(function ($request) {
             return str_contains($request->url(), 'page=2') &&
-                   str_contains($request->url(), 'perPage=50');
+                str_contains($request->url(), 'perPage=50');
         });
     });
 
     it('makes GET request to correct endpoint', function () {
-        Http::fake([
-            '*/api/v2/common/lists/goals-types*' => Http::response([
-                'status' => 1,
-                'info' => ['count' => 0],
-                'results' => [],
-            ], 200),
-        ]);
+        Http::fake(['*/api/v2/common/lists/goals-types*' => Http::response(['goals-types-list' => []])]);
 
         $this->goalTypes->list();
 
         Http::assertSent(function ($request) {
             return $request->method() === 'GET' &&
-                   str_contains($request->url(), 'api/v2/common/lists/goals-types');
+                str_contains($request->url(), 'api/v2/common/lists/goals-types');
         });
     });
 
     it('handles empty results', function () {
-        Http::fake([
-            '*/api/v2/common/lists/goals-types*' => Http::response([
-                'status' => 1,
-                'info' => ['count' => 0],
-                'results' => [],
-            ], 200),
-        ]);
+        Http::fake(['*/api/v2/common/lists/goals-types*' => Http::response(['goals-types-list' => []])]);
 
         $result = $this->goalTypes->list();
 

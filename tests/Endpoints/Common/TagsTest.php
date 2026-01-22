@@ -20,21 +20,19 @@ describe('Tags List', function () {
     it('can list tags', function () {
         Http::fake([
             '*/api/v2/common/lists/tags*' => Http::response([
-                'status' => 1,
-                'info' => [
-                    'count' => 2,
-                ],
-                'results' => [
+                'tags-list' => [
                     [
                         'id' => 1,
                         'title' => 'Exclusive',
+                        'sort' => 0
                     ],
                     [
                         'id' => 2,
                         'title' => 'Featured',
+                        'sort' => 0
                     ],
                 ],
-            ], 200),
+            ]),
         ]);
 
         $result = $this->tags->list();
@@ -45,18 +43,14 @@ describe('Tags List', function () {
             ->and($result->results->first())->toBeInstanceOf(TagDTO::class)
             ->and($result->results->first()->id)->toBe(1)
             ->and($result->results->first()->title)->toBe('Exclusive')
+            ->and($result->results->first()->sort)->toBe(0)
             ->and($result->results->last()->id)->toBe(2)
-            ->and($result->results->last()->title)->toBe('Featured');
+            ->and($result->results->last()->title)->toBe('Featured')
+            ->and($result->results->last()->sort)->toBe(0);
     });
 
     it('can use BaseRequest with pagination', function () {
-        Http::fake([
-            '*/api/v2/common/lists/tags*' => Http::response([
-                'status' => 1,
-                'info' => ['count' => 0],
-                'results' => [],
-            ], 200),
-        ]);
+        Http::fake(['*/api/v2/common/lists/tags*' => Http::response(['tags-list' => []])]);
 
         $request = (new BaseRequest)
             ->page(2)
@@ -71,13 +65,7 @@ describe('Tags List', function () {
     });
 
     it('makes GET request to correct endpoint', function () {
-        Http::fake([
-            '*/api/v2/common/lists/tags*' => Http::response([
-                'status' => 1,
-                'info' => ['count' => 0],
-                'results' => [],
-            ], 200),
-        ]);
+        Http::fake(['*/api/v2/common/lists/tags*' => Http::response(['tags-list' => []])]);
 
         $this->tags->list();
 
@@ -88,13 +76,7 @@ describe('Tags List', function () {
     });
 
     it('handles empty results', function () {
-        Http::fake([
-            '*/api/v2/common/lists/tags*' => Http::response([
-                'status' => 1,
-                'info' => ['count' => 0],
-                'results' => [],
-            ], 200),
-        ]);
+        Http::fake(['*/api/v2/common/lists/tags*' => Http::response(['tags-list' => []])]);
 
         $result = $this->tags->list();
 

@@ -32,8 +32,8 @@ readonly class LiveStatsPeriodDTO
         return new self(
             ranges: $ranges,
             series: $series,
-            total: self::getInt($data, 'total'),
-            totalChange: self::getInt($data, 'total_change'),
+            total: self::getIntOrNull($data, 'total') ?? 0,
+            totalChange: self::getIntOrNull($data, 'total_change') ?? 0,
         );
     }
 }

@@ -20,24 +20,23 @@ describe('Countries List', function () {
     it('can list countries', function () {
         Http::fake([
             '*/api/v2/common/lists/countries*' => Http::response([
-                'status' => 1,
-                'info' => [
-                    'count' => 3,
-                ],
-                'results' => [
+                'countries-list' => [
                     [
-                        'id' => 'CZ',
+                        'id' => 1,
+                        'country_code' => 'CZ',
                         'title' => 'Czech Republic',
                     ],
                     [
-                        'id' => 'US',
+                        'id' => 2,
+                        'country_code' => 'US',
                         'title' => 'United States',
                     ],
                     [
-                        'id' => 'GB',
+                        'id' => 3,
+                        'country_code' => 'GB',
                         'title' => 'United Kingdom',
                     ],
-                ],
+                ]
             ], 200),
         ]);
 
@@ -47,20 +46,14 @@ describe('Countries List', function () {
             ->and($result->count)->toBe(3)
             ->and($result->results)->toHaveCount(3)
             ->and($result->results->first())->toBeInstanceOf(CountryDTO::class)
-            ->and($result->results->first()->id)->toBe('CZ')
+            ->and($result->results->first()->countryCode)->toBe('CZ')
             ->and($result->results->first()->title)->toBe('Czech Republic')
-            ->and($result->results->last()->id)->toBe('GB')
+            ->and($result->results->last()->countryCode)->toBe('GB')
             ->and($result->results->last()->title)->toBe('United Kingdom');
     });
 
     it('can use BaseRequest with pagination', function () {
-        Http::fake([
-            '*/api/v2/common/lists/countries*' => Http::response([
-                'status' => 1,
-                'info' => ['count' => 0],
-                'results' => [],
-            ], 200),
-        ]);
+        Http::fake(['*/api/v2/common/lists/countries*' => Http::response(['countries-list' => []])]);
 
         $request = (new BaseRequest)
             ->page(2)
@@ -70,35 +63,23 @@ describe('Countries List', function () {
 
         Http::assertSent(function ($request) {
             return str_contains($request->url(), 'page=2') &&
-                   str_contains($request->url(), 'perPage=50');
+                str_contains($request->url(), 'perPage=50');
         });
     });
 
     it('makes GET request to correct endpoint', function () {
-        Http::fake([
-            '*/api/v2/common/lists/countries*' => Http::response([
-                'status' => 1,
-                'info' => ['count' => 0],
-                'results' => [],
-            ], 200),
-        ]);
+        Http::fake(['*/api/v2/common/lists/countries*' => Http::response(['countries-list' => []])]);
 
         $this->countries->list();
 
         Http::assertSent(function ($request) {
             return $request->method() === 'GET' &&
-                   str_contains($request->url(), 'api/v2/common/lists/countries');
+                str_contains($request->url(), 'api/v2/common/lists/countries');
         });
     });
 
     it('handles empty results', function () {
-        Http::fake([
-            '*/api/v2/common/lists/countries*' => Http::response([
-                'status' => 1,
-                'info' => ['count' => 0],
-                'results' => [],
-            ], 200),
-        ]);
+        Http::fake(['*/api/v2/common/lists/countries*' => Http::response(['countries-list' => []])]);
 
         $result = $this->countries->list();
 
