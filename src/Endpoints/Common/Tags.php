@@ -17,8 +17,7 @@ class Tags
 {
     public function __construct(
         private readonly BaseScaleoClient $client
-    ) {
-    }
+    ) {}
 
     /**
      * Get list of tags
@@ -42,7 +41,7 @@ class Tags
         return ListResponse::fromResponse(
             response: $response,
             key: 'tags-list',
-            mapper: fn(array $tag): TagDTO => TagDTO::fromArray($tag)
+            mapper: fn (array $tag): TagDTO => TagDTO::fromArray($tag)
         );
     }
 }

@@ -48,8 +48,8 @@ readonly class OfferDTO
         public int $linksCount,
         public Collection $links,
         public Collection $categories,
-        public ?string $postbacks = null,
-        public ?int $deepLinking = null,
+        public ?string $postbacks,
+        public ?int $deepLinking,
         public Collection $visibleTypeSelected,
         public ?LiveStatsDTO $liveStats = null,
     ) {}
