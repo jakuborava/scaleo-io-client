@@ -131,6 +131,26 @@ foreach ($offers->items as $offer) {
 $offer = $client->affiliate()->offers()->get(123);
 echo "Payout: {$offer->defaultPayout} {$offer->defaultPayoutCurrency}" . PHP_EOL;
 
+// Access offer visibility settings
+foreach ($offer->visibleTypeSelected as $visibleType) {
+    echo "Visibility: {$visibleType->title}" . PHP_EOL;
+}
+
+// Access live statistics (if available)
+if ($offer->liveStats !== null) {
+    echo "Stats Key: {$offer->liveStats->key}" . PHP_EOL;
+    echo "Current Total: {$offer->liveStats->current->total}" . PHP_EOL;
+    echo "Previous Total: {$offer->liveStats->previous->total}" . PHP_EOL;
+}
+
+// Access offer links with rules
+foreach ($offer->links as $link) {
+    echo "Link: {$link->url}" . PHP_EOL;
+    if (!empty($link->rules)) {
+        echo "Has validation rules" . PHP_EOL;
+    }
+}
+
 // Download offer assets
 $zipPath = $client->affiliate()->offers()->downloadAsset(
     offerId: 123,
@@ -345,6 +365,79 @@ $players = $client->affiliate()->players()->list(
 ```php
 $traders = $client->affiliate()->traders()->list(
     BaseRequest::create()->page(1)
+);
+```
+
+### Common Lists
+
+The client provides access to common lists used throughout the Scaleo platform. All common endpoints support pagination through BaseRequest:
+
+#### Countries
+
+Get a list of all supported countries:
+
+```php
+use JakubOrava\ScaleoIoClient\Requests\BaseRequest;
+
+// Get countries with default settings
+$countries = $client->common()->countries()->list();
+
+foreach ($countries->results as $country) {
+    echo "{$country->id}: {$country->title}" . PHP_EOL;
+    // Example: CZ: Czech Republic
+}
+
+echo "Total countries: {$countries->count}" . PHP_EOL;
+
+// Get countries with custom pagination
+$countries = $client->common()->countries()->list(
+    (new BaseRequest)->page(2)->perPage(50)
+);
+```
+
+#### Tags
+
+Get a list of available tags:
+
+```php
+use JakubOrava\ScaleoIoClient\Requests\BaseRequest;
+
+// Get tags with default settings
+$tags = $client->common()->tags()->list();
+
+foreach ($tags->results as $tag) {
+    echo "{$tag->id}: {$tag->title}" . PHP_EOL;
+    // Example: 1: Exclusive
+}
+
+echo "Total tags: {$tags->count}" . PHP_EOL;
+
+// Get tags with custom pagination
+$tags = $client->common()->tags()->list(
+    (new BaseRequest)->page(1)->perPage(100)
+);
+```
+
+#### Goal Types
+
+Get a list of available goal types:
+
+```php
+use JakubOrava\ScaleoIoClient\Requests\BaseRequest;
+
+// Get goal types with default settings
+$goalTypes = $client->common()->goalTypes()->list();
+
+foreach ($goalTypes->results as $goalType) {
+    echo "{$goalType->id}: {$goalType->title}" . PHP_EOL;
+    // Example: sale: Sale
+}
+
+echo "Total goal types: {$goalTypes->count}" . PHP_EOL;
+
+// Get goal types with custom pagination
+$goalTypes = $client->common()->goalTypes()->list(
+    (new BaseRequest)->page(1)->perPage(20)
 );
 ```
 
