@@ -36,7 +36,7 @@ describe('Countries List', function () {
                         'country_code' => 'GB',
                         'title' => 'United Kingdom',
                     ],
-                ]
+                ],
             ], 200),
         ]);
 

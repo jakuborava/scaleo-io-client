@@ -24,12 +24,12 @@ describe('Tags List', function () {
                     [
                         'id' => 1,
                         'title' => 'Exclusive',
-                        'sort' => 0
+                        'sort' => 0,
                     ],
                     [
                         'id' => 2,
                         'title' => 'Featured',
-                        'sort' => 0
+                        'sort' => 0,
                     ],
                 ],
             ]),
