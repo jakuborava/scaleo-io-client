@@ -10,6 +10,9 @@ readonly class OfferLinkDTO
 {
     use ArrayHelpers;
 
+    /**
+     * @param  array<string, mixed>  $rules
+     */
     public function __construct(
         public int $id,
         public string $title,
@@ -38,6 +41,8 @@ readonly class OfferLinkDTO
         if (! is_array($rules)) {
             $rules = [];
         }
+
+        /** @var array<string, mixed> $rules */
 
         return new self(
             id: self::getInt($data, 'id'),

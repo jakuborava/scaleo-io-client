@@ -26,8 +26,13 @@ readonly class LiveStatsPeriodDTO
      */
     public static function fromArray(array $data): self
     {
-        $ranges = is_array($data['ranges'] ?? null) ? $data['ranges'] : [];
-        $series = is_array($data['series'] ?? null) ? $data['series'] : [];
+        $ranges = is_array($data['ranges'] ?? null)
+            ? array_values(array_map(fn ($v): string => is_scalar($v) ? (string) $v : '', $data['ranges']))
+            : [];
+
+        $series = is_array($data['series'] ?? null)
+            ? array_values(array_map(fn ($v): int => is_numeric($v) ? (int) $v : 0, $data['series']))
+            : [];
 
         return new self(
             ranges: $ranges,
