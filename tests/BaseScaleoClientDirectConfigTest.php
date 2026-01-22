@@ -66,7 +66,7 @@ describe('Direct Configuration', function () {
             ], 200),
         ]);
 
-        $client = new BaseScaleoClient();
+        $client = new BaseScaleoClient;
 
         $client->get('/api/test');
 

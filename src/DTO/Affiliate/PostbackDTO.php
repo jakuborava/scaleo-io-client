@@ -40,7 +40,6 @@ readonly class PostbackDTO
             $offerSelected = null;
         }
         /** @var array<string, mixed>|null $offerSelected */
-
         $goalSelected = $data['goal_selected'] ?? null;
         if ($goalSelected !== null && ! is_array($goalSelected)) {
             $goalSelected = null;

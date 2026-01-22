@@ -26,7 +26,6 @@ readonly class NetworkSummaryItemDTO
             throw new \InvalidArgumentException('Expected array for current');
         }
         /** @var array<string, mixed> $current */
-
         $previous = $data['previous'] ?? [];
         if (! is_array($previous)) {
             throw new \InvalidArgumentException('Expected array for previous');

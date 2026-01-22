@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use JakubOrava\ScaleoIoClient\DTO\Affiliate\NetworkSummaryItemDTO;
-use JakubOrava\ScaleoIoClient\Endpoints\Affiliate\Dashboard;
 use JakubOrava\ScaleoIoClient\Exceptions\UnexpectedResponseException;
 use JakubOrava\ScaleoIoClient\Requests\NetworkSummaryRequest;
 use JakubOrava\ScaleoIoClient\ScaleoIoClient;
