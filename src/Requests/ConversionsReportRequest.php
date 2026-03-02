@@ -8,6 +8,73 @@ use Carbon\Carbon;
 
 class ConversionsReportRequest
 {
+    public const DEFAULT_COLUMNS = [
+        'transaction_id',
+        'conversion_status',
+        'added_timestamp',
+        'time_difference',
+        'payout',
+        'sub_id1',
+        'sub_id2',
+        'sub_id3',
+        'sub_id4',
+        'sub_id5',
+        'aff_param1',
+        'aff_param2',
+        'aff_param3',
+        'aff_param4',
+        'aff_param5',
+        'aff_click_id',
+        'deep_link_url',
+        'source',
+        'advertiser_order_id',
+        'advertiser_user_id',
+        'advertiser_amount',
+        'offer',
+        'goal',
+        'goal_type',
+        'link',
+        'creative',
+        'language',
+        'connection_type',
+        'mobile_operator',
+        'idfa',
+        'gaid',
+        'ip',
+        'geo',
+        'device_type',
+        'device_brand',
+        'device_model',
+        'device_os',
+        'device_os_version',
+        'browser',
+        'browser_version',
+        'email',
+        'phone',
+        'firstname',
+        'lastname',
+        'address',
+        'city',
+        'region',
+        'postcode',
+        'country',
+        'gender',
+        'birthday',
+        'vertical',
+        'custom1',
+        'custom2',
+        'custom3',
+        'custom4',
+        'custom5',
+        'custom6',
+        'custom7',
+        'custom8',
+        'custom9',
+        'custom10',
+    ];
+
+    protected string $columns;
+
     protected ?string $rangeFrom = null;
 
     protected ?string $rangeTo = null;
@@ -26,6 +93,21 @@ class ConversionsReportRequest
      * @var array<string, mixed>
      */
     protected array $filters = [];
+
+    public function __construct()
+    {
+        $this->columns = implode(',', self::DEFAULT_COLUMNS);
+    }
+
+    /**
+     * @param  array<int, string>  $columns
+     */
+    public function columns(array $columns): self
+    {
+        $this->columns = implode(',', $columns);
+
+        return $this;
+    }
 
     public function rangeFrom(Carbon|string $date): self
     {
@@ -124,6 +206,8 @@ class ConversionsReportRequest
         if ($this->rangeTo !== null) {
             $body['rangeTo'] = $this->rangeTo;
         }
+
+        $body['columns'] = $this->columns;
 
         if (count($this->filters) > 0) {
             $body['filters'] = $this->filters;

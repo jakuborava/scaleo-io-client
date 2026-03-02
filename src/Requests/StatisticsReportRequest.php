@@ -8,13 +8,38 @@ use Carbon\Carbon;
 
 class StatisticsReportRequest
 {
+    public const DEFAULT_COLUMNS = [
+        'impressions',
+        'ctr',
+        'clicks',
+        'unique_clicks',
+        'duplicate_clicks',
+        'invalid_clicks',
+        'clicks_payout',
+        'cv_approved',
+        'cr',
+        'approved_payout',
+        'cv_total',
+        'tr',
+        'total_payout',
+        'cv_pending',
+        'pr',
+        'pending_payout',
+        'cv_rejected',
+        'rr',
+        'rejected_payout',
+        'epm',
+        'epc',
+        'epa',
+    ];
+
+    protected string $columns;
+
     protected ?string $rangeFrom = null;
 
     protected ?string $rangeTo = null;
 
     protected ?string $breakdown = null;
-
-    protected ?string $columns = null;
 
     protected ?string $lang = null;
 
@@ -30,6 +55,11 @@ class StatisticsReportRequest
      * @var array<string, mixed>
      */
     protected array $filters = [];
+
+    public function __construct()
+    {
+        $this->columns = implode(',', self::DEFAULT_COLUMNS);
+    }
 
     public function rangeFrom(Carbon|string $date): self
     {
@@ -150,9 +180,7 @@ class StatisticsReportRequest
             $body['breakdown'] = $this->breakdown;
         }
 
-        if ($this->columns !== null) {
-            $body['columns'] = $this->columns;
-        }
+        $body['columns'] = $this->columns;
 
         if (count($this->filters) > 0) {
             $body['filters'] = $this->filters;

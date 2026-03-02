@@ -163,11 +163,16 @@ class BaseScaleoClient
         // Add API key to query parameters
         $queryParams['api-key'] = $this->apiKey;
 
+        // For non-GET methods, append query params (including api-key) to the URL
+        if (strtoupper($method) !== 'GET' && ! empty($queryParams)) {
+            $url .= '?' . http_build_query($queryParams);
+        }
+
         return match (strtoupper($method)) {
             'GET' => $client->get($url, $queryParams),
-            'POST' => $client->post($url, array_merge($data, $queryParams)),
-            'PATCH' => $client->patch($url, array_merge($data, $queryParams)),
-            'PUT' => $client->put($url, array_merge($data, $queryParams)),
+            'POST' => $client->post($url, $data),
+            'PATCH' => $client->patch($url, $data),
+            'PUT' => $client->put($url, $data),
             'DELETE' => $client->delete($url, $queryParams),
             default => throw new UnexpectedResponseException("Unsupported HTTP method: $method"),
         };

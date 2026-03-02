@@ -76,10 +76,12 @@ describe('List Statistics Report', function () {
         $this->statistics->list($req);
 
         Http::assertSent(function ($request) {
+            $url = $request->url();
+
             return $request->method() === 'POST' &&
-                   str_contains($request->url(), 'api/v2/affiliate/reports/statistics') &&
-                   $request['page'] === 1 &&
-                   $request['perPage'] === 50 &&
+                   str_contains($url, 'api/v2/affiliate/reports/statistics') &&
+                   str_contains($url, 'page=1') &&
+                   str_contains($url, 'perPage=50') &&
                    $request['rangeFrom'] === '2024-01-01' &&
                    $request['rangeTo'] === '2024-12-31' &&
                    $request['breakdown'] === 'day' &&
@@ -104,9 +106,11 @@ describe('List Statistics Report', function () {
         $this->statistics->list($req);
 
         Http::assertSent(function ($request) {
-            // Both query and body params are in the request body for POST
-            return $request['lang'] === 'en' &&
-                   $request['page'] === 1 &&
+            $url = $request->url();
+
+            // Query params are in the URL, body params are in the request body
+            return str_contains($url, 'lang=en') &&
+                   str_contains($url, 'page=1') &&
                    $request['rangeFrom'] === '2024-01-01' &&
                    $request['rangeTo'] === '2024-12-31';
         });

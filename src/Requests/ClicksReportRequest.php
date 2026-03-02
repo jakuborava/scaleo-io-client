@@ -8,6 +8,46 @@ use Carbon\Carbon;
 
 class ClicksReportRequest
 {
+    public const DEFAULT_COLUMNS = [
+        'transaction_id',
+        'added_timestamp',
+        'payout',
+        'sub_id1',
+        'sub_id2',
+        'sub_id3',
+        'sub_id4',
+        'sub_id5',
+        'aff_param1',
+        'aff_param2',
+        'aff_param3',
+        'aff_param4',
+        'aff_param5',
+        'aff_click_id',
+        'deep_link_url',
+        'source',
+        'offer',
+        'goal',
+        'goal_type',
+        'link',
+        'creative',
+        'language',
+        'connection_type',
+        'mobile_operator',
+        'idfa',
+        'gaid',
+        'ip',
+        'geo',
+        'device_type',
+        'device_brand',
+        'device_model',
+        'device_os',
+        'device_os_version',
+        'browser',
+        'browser_version',
+    ];
+
+    protected string $columns;
+
     protected ?string $rangeFrom = null;
 
     protected ?string $rangeTo = null;
@@ -26,6 +66,21 @@ class ClicksReportRequest
      * @var array<string, mixed>
      */
     protected array $filters = [];
+
+    public function __construct()
+    {
+        $this->columns = implode(',', self::DEFAULT_COLUMNS);
+    }
+
+    /**
+     * @param  array<int, string>  $columns
+     */
+    public function columns(array $columns): self
+    {
+        $this->columns = implode(',', $columns);
+
+        return $this;
+    }
 
     public function rangeFrom(Carbon|string $date): self
     {
@@ -124,6 +179,8 @@ class ClicksReportRequest
         if ($this->rangeTo !== null) {
             $body['rangeTo'] = $this->rangeTo;
         }
+
+        $body['columns'] = $this->columns;
 
         if (count($this->filters) > 0) {
             $body['filters'] = $this->filters;
