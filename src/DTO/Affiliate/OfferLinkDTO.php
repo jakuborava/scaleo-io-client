@@ -16,7 +16,7 @@ readonly class OfferLinkDTO
     public function __construct(
         public int $id,
         public string $title,
-        public int $type,
+        public ?int $type,
         public string $url,
         public string $preview,
         public int $visibleToAllAffiliates,
@@ -47,7 +47,7 @@ readonly class OfferLinkDTO
         return new self(
             id: self::getInt($data, 'id'),
             title: self::getString($data, 'title'),
-            type: self::getInt($data, 'type'),
+            type: self::getIntOrNull($data, 'type'),
             url: self::getString($data, 'url'),
             preview: self::getString($data, 'preview'),
             visibleToAllAffiliates: self::getInt($data, 'visible_to_all_affiliates'),

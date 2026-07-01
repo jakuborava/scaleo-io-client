@@ -11,9 +11,21 @@ trait ArrayHelpers
     /**
      * @param  array<string, mixed>  $data
      */
+    private static function requireKey(array $data, string $key): mixed
+    {
+        if (! array_key_exists($key, $data)) {
+            throw new \InvalidArgumentException("Missing required key '$key'");
+        }
+
+        return $data[$key];
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
     private static function getString(array $data, string $key): string
     {
-        $value = $data[$key];
+        $value = self::requireKey($data, $key);
 
         if (is_string($value)) {
             return $value;
@@ -27,7 +39,7 @@ trait ArrayHelpers
      */
     private static function getInt(array $data, string $key): int
     {
-        $value = $data[$key];
+        $value = self::requireKey($data, $key);
 
         if (is_int($value)) {
             return $value;
@@ -45,7 +57,7 @@ trait ArrayHelpers
      */
     private static function getFloat(array $data, string $key): float
     {
-        $value = $data[$key];
+        $value = self::requireKey($data, $key);
 
         if (is_float($value) || is_int($value)) {
             return (float) $value;
@@ -160,7 +172,7 @@ trait ArrayHelpers
      */
     private static function getArray(array $data, string $key): array
     {
-        $value = $data[$key];
+        $value = self::requireKey($data, $key);
 
         if (! is_array($value)) {
             throw new \InvalidArgumentException("Expected array for key '$key', got ".get_debug_type($value));

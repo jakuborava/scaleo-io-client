@@ -68,6 +68,47 @@ describe('OfferLinkDTO', function () {
             ->and($dto->rules)->toBeEmpty();
     });
 
+    it('handles missing type field', function () {
+        $data = [
+            'id' => 1,
+            'title' => 'Test Link',
+            'url' => 'https://example.com',
+            'preview' => 'https://example.com/preview',
+            'visible_to_all_affiliates' => 1,
+            'visible_to_specific_affiliates_only' => null,
+            'geo_allowed' => null,
+            'geo_denied' => null,
+            'percent' => null,
+            'status' => 1,
+            'offer_id' => 100,
+            'created' => null,
+            'updated' => null,
+            'type_selected' => null,
+            'rules' => [],
+        ];
+
+        $dto = OfferLinkDTO::fromArray($data);
+
+        expect($dto->type)->toBeNull()
+            ->and($dto->id)->toBe(1);
+    });
+
+    it('throws a clear exception when a required key is missing', function () {
+        $data = [
+            'id' => 1,
+            'title' => 'Test Link',
+            // 'url' is required and intentionally omitted
+            'preview' => 'https://example.com/preview',
+            'visible_to_all_affiliates' => 1,
+            'status' => 1,
+            'offer_id' => 100,
+            'rules' => [],
+        ];
+
+        expect(fn () => OfferLinkDTO::fromArray($data))
+            ->toThrow(InvalidArgumentException::class, "Missing required key 'url'");
+    });
+
     it('handles missing rules field', function () {
         $data = [
             'id' => 1,
