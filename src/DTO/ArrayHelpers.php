@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JakubOrava\ScaleoIoClient\DTO;
 
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 trait ArrayHelpers
@@ -185,7 +186,7 @@ trait ArrayHelpers
     /**
      * @param  array<string, mixed>  $data
      */
-    private static function getCarbonOrNull(array $data, string $key): ?\Carbon\Carbon
+    private static function getCarbonOrNull(array $data, string $key): ?Carbon
     {
         $value = self::getStringOrNull($data, $key);
 
@@ -193,7 +194,7 @@ trait ArrayHelpers
             return null;
         }
 
-        return \Carbon\Carbon::parse($value);
+        return Carbon::parse($value);
     }
 
     /**

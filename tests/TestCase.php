@@ -3,6 +3,7 @@
 namespace JakubOrava\ScaleoIoClient\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use JakubOrava\ScaleoIoClient\ScaleoIoClient;
 use JakubOrava\ScaleoIoClient\ScaleoIoClientServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -38,9 +39,9 @@ class TestCase extends Orchestra
     /**
      * Create a test client with test credentials
      */
-    protected function createTestClient(): \JakubOrava\ScaleoIoClient\ScaleoIoClient
+    protected function createTestClient(): ScaleoIoClient
     {
-        return new \JakubOrava\ScaleoIoClient\ScaleoIoClient(
+        return new ScaleoIoClient(
             apiKey: 'test-api-key',
             baseUrl: 'https://test.scaletrk.com'
         );
