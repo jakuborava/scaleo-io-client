@@ -164,7 +164,7 @@ class BaseScaleoClient
         $queryParams['api-key'] = $this->apiKey;
 
         // For non-GET methods, append query params (including api-key) to the URL
-        if (strtoupper($method) !== 'GET') {
+        if (strtoupper($method) !== 'GET' && ! empty($queryParams)) {
             $url .= '?' . http_build_query($queryParams);
         }
 
