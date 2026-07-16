@@ -13,7 +13,7 @@ describe('ScaleoIoClientException', function () {
         $exception = new ScaleoIoClientException('Test exception');
 
         expect($exception)->toBeInstanceOf(ScaleoIoClientException::class)
-            ->and($exception)->toBeInstanceOf(\Exception::class)
+            ->and($exception)->toBeInstanceOf(Exception::class)
             ->and($exception->getMessage())->toBe('Test exception');
     });
 });
@@ -64,7 +64,7 @@ describe('ApiErrorException', function () {
     });
 
     it('accepts previous exception', function () {
-        $previous = new \Exception('Previous exception');
+        $previous = new Exception('Previous exception');
         $exception = new ApiErrorException('API error', 500, $previous);
 
         expect($exception->getPrevious())->toBe($previous);
