@@ -93,20 +93,36 @@ describe('OfferLinkDTO', function () {
             ->and($dto->id)->toBe(1);
     });
 
+    it('parses the slim link shape returned by the offers list endpoint', function () {
+        // Since mid-2026 the offers list endpoint returns links with only these three keys
+        $data = [
+            'id' => 1555,
+            'title' => 'Default Landing Page',
+            'preview' => 'https://www.airpaz.com',
+        ];
+
+        $dto = OfferLinkDTO::fromArray($data);
+
+        expect($dto->id)->toBe(1555)
+            ->and($dto->title)->toBe('Default Landing Page')
+            ->and($dto->preview)->toBe('https://www.airpaz.com')
+            ->and($dto->url)->toBeNull()
+            ->and($dto->type)->toBeNull()
+            ->and($dto->visibleToAllAffiliates)->toBeNull()
+            ->and($dto->status)->toBeNull()
+            ->and($dto->offerId)->toBeNull()
+            ->and($dto->rules)->toBeEmpty();
+    });
+
     it('throws a clear exception when a required key is missing', function () {
         $data = [
-            'id' => 1,
             'title' => 'Test Link',
-            // 'url' is required and intentionally omitted
+            // 'id' is required and intentionally omitted
             'preview' => 'https://example.com/preview',
-            'visible_to_all_affiliates' => 1,
-            'status' => 1,
-            'offer_id' => 100,
-            'rules' => [],
         ];
 
         expect(fn () => OfferLinkDTO::fromArray($data))
-            ->toThrow(InvalidArgumentException::class, "Missing required key 'url'");
+            ->toThrow(InvalidArgumentException::class, "Missing required key 'id'");
     });
 
     it('handles missing rules field', function () {
